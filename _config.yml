@@ -22,8 +22,7 @@ author: Stephan Wolf
 navbar-links:
   About Me: "aboutme"
   Resources:
-    - Beautiful Jekyll: "https://beautifuljekyll.com"
-    - Learn markdown: "https://www.markdowntutorial.com/"
+    - CrowdStrike: "https://www.crowdstrike.com/blog/author/stephan-wolfert/"
   Author's home: "https://swolfsec.github.io"
 
 ################
