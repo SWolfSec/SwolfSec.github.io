@@ -2,8 +2,6 @@
 layout: post
 title: Not just Kerberoasting
 subtitle: Kerberos Tickets and Password Resets
-gh-repo: daattali/beautiful-jekyll
-gh-badge: [star, fork, follow]
 tags: [kerberos]
 comments: false
 ---
