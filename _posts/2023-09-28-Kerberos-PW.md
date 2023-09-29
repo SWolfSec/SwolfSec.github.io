@@ -5,7 +5,7 @@ subtitle: Kerberos Tickets and Password Resets
 tags: [kerberos]
 comments: false
 ---
-**_TLDR_** Kerberos attacks are more then just Golden Tickets and Kerberoasting. Password Resets are not always enough!
+> **_TLDR_** Kerberos attacks are more then just Golden Tickets and Kerberoasting. Password Resets are not always enough!
 
 ## Preface about Kerberos 
 
@@ -25,7 +25,7 @@ First, the attacker uses [Rubeus](https://github.com/GhostPack/Rubeus) to reques
 
 ![tgtdeleg](https://swolfsec.github.io/assets/img/1_tgtdeleg.PNG){: .mx-auto.d-block :}
 
-The Event ID **4769** is a great event log for tracking Kerberos Ticket Requests and it may already be logged because of it's common use in identifying Kerberoasting. In this case, the client address is the compromised workstation (not the attacker system) at IP address _192.168.5.169_ and specifies the _highpriv_user_ account which was compromised. The ticket options presented here are described by Microsoft as _Forwardable, Forwarded, Renewable, Canonicalize, Renewable-ok_ which translates to options of **0x60810010**. This options are not incredibly interesting but the importance  of the Renewable flag will be seen later on. 
+The Event ID **4769** is a great event log for tracking Kerberos Ticket Requests and it may already be logged because of it's common use in identifying Kerberoasting. In this case, the client address is the compromised workstation (not the attacker system) at IP address _192.168.5.169_ and specifies the _highpriv_user_ account which was compromised. The ticket options presented here are described by Microsoft as _Forwardable, Forwarded, Renewable, Canonicalize, Renewable-ok_ which translates to options of **0x60810010**. These options may not be immediately interesting but the importance  of the Renewable flag will be seen later on. 
 
 ![4769](https://swolfsec.github.io/assets/img/2_ticketrequest4769.PNG){: .mx-auto.d-block :} 
 
@@ -63,7 +63,7 @@ Although, if the attacker identified that the account had a password reset, they
 
 ![ticketrenew4770](https://swolfsec.github.io/assets/img/13_TicketRenewal4770.PNG){: .mx-auto.d-block :}  
 
-The first screenshot above shows the same **renewal** expiry as the original Kerberos Ticket request, but has a new validity start/expiry period. With the renewed ticket and the password reset, a final secretsdump against the Domain Controller shows the attacker's Kerberos Ticket is still valid.  The start/expiry times match the minutes / seconds on the 4770 event log. (klist time - 02:01:55 -- Event Log time - 11:01:55)
+The first screenshot above shows the same **renewal** expiry as the original Kerberos Ticket request, but has a new validity start/expiry period. The start/expiry times match the minutes / seconds on the 4770 event log. (klist time - 02:01:55 -- Event Log time - 11:01:55). With the renewed ticket and the password reset, a final secretsdump against the Domain Controller shows the attacker's Kerberos Ticket is still valid.  
 
 ![secrestdump](https://swolfsec.github.io/assets/img/12_secretsdumpafterrenewal.PNG){: .mx-auto.d-block :}  
 
