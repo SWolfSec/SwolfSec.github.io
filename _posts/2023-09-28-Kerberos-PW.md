@@ -63,7 +63,7 @@ Although, if the attacker identified that the account had a password reset, they
 
 ![ticketrenew4770](https://swolfsec.github.io/assets/img/13_TicketRenewal4770.PNG){: .mx-auto.d-block :}  
 
-The first screenshot above shows the same **renewal** expiry as the original Kerberos Ticket request, but has a new validity start/expiry period. With the renewed ticket and the password reset, a final secretsdump against the Domain Controller shows the attacker's Kerberos Ticket is still valid.  The start/expiry times match the minutes / seconds on the 4770 event log. (klist time - 02:01:55 | Event Log time - 11:01:55)
+The first screenshot above shows the same **renewal** expiry as the original Kerberos Ticket request, but has a new validity start/expiry period. With the renewed ticket and the password reset, a final secretsdump against the Domain Controller shows the attacker's Kerberos Ticket is still valid.  The start/expiry times match the minutes / seconds on the 4770 event log. (klist time - 02:01:55 -- Event Log time - 11:01:55)
 
 ![secrestdump](https://swolfsec.github.io/assets/img/12_secretsdumpafterrenewal.PNG){: .mx-auto.d-block :}  
 
