@@ -20,10 +20,10 @@ author: Stephan Wolfert
 ###############################################
 
 navbar-links:
-  About Me: "aboutme"
+  Home: "https://swolfsec.github.io"
   Resources:
     - CrowdStrike: "https://www.crowdstrike.com/blog/author/stephan-wolfert/"
-  Home: "https://swolfsec.github.io"
+  About Me: "aboutme"
 
 ################
 # --- Logo --- #
