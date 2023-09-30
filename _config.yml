@@ -13,7 +13,7 @@
 title: SWolfSecurity
 
 # Your name to show in the footer
-author: Stephan Wolf
+author: Stephan Wolfert
 
 ###############################################
 # --- List of links in the navigation bar --- #
@@ -23,7 +23,7 @@ navbar-links:
   About Me: "aboutme"
   Resources:
     - CrowdStrike: "https://www.crowdstrike.com/blog/author/stephan-wolfert/"
-  Author's home: "https://swolfsec.github.io"
+  Home: "https://swolfsec.github.io"
 
 ################
 # --- Logo --- #

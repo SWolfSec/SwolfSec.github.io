@@ -4,6 +4,7 @@ title: Not just Kerberoasting
 subtitle: Kerberos Tickets and Password Resets
 tags: [kerberos]
 comments: false
+author: Stephan Wolfert
 share-img:  https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/kerberos.jpg
 ---
 > **_TLDR_** Kerberos attacks are more than just Golden Tickets and Kerberoasting. Password Resets are not always enough!
@@ -68,6 +69,6 @@ The first screenshot above shows the same **renewal** expiry as the original Ker
 
 ![secrestdump](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/12_secretsdumpafterrenewal.PNG){: .mx-auto.d-block :}  
 
-Of course, during this process the attacker would need to recognize that the password was reset prior to the expiration of the ticket and disabling the account would have prevented further abuse and there are plenty of other ways to persist in a domain. A common remediation task for Golden Tickets and other kerberos-based attacks involves a [krbtgt double-tap](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/forest-recovery-guide/ad-forest-recovery-reset-the-krbtgt-password) where the krbtgt account has its password rotated twice with 10 hours between resets. This approach can also be viable for abuse of Kerberos Tickets explained here. The process of performing a double-tap can have significant impact on an organization who relies on Active Directory therefore, it may not be a bad idea to practice performing a krbtgt double-tap prior to an incident and determine exactly the impact it will have. 
+Of course, during this process the attacker would need to recognize that the password was reset prior to the expiration of the ticket and disabling the account would have prevented further abuse and there are plenty of other ways to persist in a domain. A common remediation task for Golden Tickets and other kerberos-based attacks involves a [krbtgt double-tap](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/forest-recovery-guide/ad-forest-recovery-reset-the-krbtgt-password) where the krbtgt account has its password rotated twice with 10 hours between resets. This approach can also be viable for abuse of Kerberos Tickets explained here. The process of performing a double-tap can have significant impact on an organization who relies on Active Directory. With that in mind, it may not be a bad idea to practice performing a krbtgt double-tap prior to an incident and determine exactly the impact it will have. 
 
 While the Kerberos abuse described here may not be as flashy as Golden Tickets or Kerberoasting, it should be considered by defenders when investigating unauthorized access to a domain account. 
