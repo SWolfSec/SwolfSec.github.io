@@ -1,11 +1,13 @@
 ---
 layout: post
 title: Not just Kerberoasting
-subtitle: Kerberos Tickets and Password Resets - Stephan Wolfert
+subtitle: Kerberos Tickets and Password Resets
 tags: [kerberos]
 comments: false
 share-img:  https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/kerberos.jpg
 ---
+<sub><sup>By Stephan Wolfert </sup></sub>
+
 > **_TLDR_** Kerberos attacks are more than just Golden Tickets and Kerberoasting. Password Resets are not always enough!
 
 ## Preface about Kerberos 
