@@ -4,6 +4,7 @@ title: Not just Kerberoasting
 subtitle: Kerberos Tickets and Password Resets
 tags: [kerberos]
 comments: false
+share-img:  https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/kerberos.jpg
 ---
 > **_TLDR_** Kerberos attacks are more than just Golden Tickets and Kerberoasting. Password Resets are not always enough!
 
@@ -23,49 +24,49 @@ During this scenario, we will flip between the attacker and defender perspective
 
 First, the attacker uses [Rubeus'](https://github.com/GhostPack/Rubeus#tgtdeleg) _tgtdeleg_ argument to request a Kerberos ticket for the currently compromised user, _highpriv_user_. They are returned a base64 encoded kirbi that can be used for authentication without the need to supply a password. Many toolsets, such as those from the [impacket](https://github.com/fortra/impacket) collection, allow for the use of a Kerberos ticket instead of a password or a hash.
 
-![tgtdeleg](https://swolfsec.github.io/assets/img/1_tgtdeleg.PNG){: .mx-auto.d-block :}
+![tgtdeleg](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/1_tgtdeleg.PNG){: .mx-auto.d-block :}
 
 The Event ID **4769** is a great event log for tracking Kerberos Ticket Requests and it may already be logged in any environments because of it's common use in identifying Kerberoasting. In this case, the client address is the compromised workstation (not the attacker system) at IP address _192.168.5.169_ and specifies the _highpriv_user_ account which was compromised. The ticket options presented here are described by Microsoft as _Forwardable, Forwarded, Renewable, Canonicalize, Renewable-ok_ which translates to options of **0x60810010**. These options may not be immediately interesting but the importance  of the Renewable flag will be seen later on. 
 
-![4769](https://swolfsec.github.io/assets/img/2_ticketrequest4769.PNG){: .mx-auto.d-block :} 
+![4769](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/2_ticketrequest4769.PNG){: .mx-auto.d-block :} 
 
 The attacker then imports the ticket to their local machine which has access to the compromised network. If you notice the time (minutes / seconds) of the 4769 ticket request and the imported ticket they match. Ignore the hours, the test environment has skewed times (not important they are the same time for argument's sake). In addition, refer back to this screenshot later, as you can see here the valid _starting datetime_, _expiry time_, and _renew until_ time. As we get into renewals, that renewal time will not change but the validity start/expiry will. 
 
-![ticketimport](https://swolfsec.github.io/assets/img/3_ticketimported.PNG){: .mx-auto.d-block :}  
+![ticketimport](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/3_ticketimported.PNG){: .mx-auto.d-block :}  
 
 Now they can use the ticket to move laterally, in this case using [smbexec](https://github.com/fortra/impacket/blob/master/examples/smbexec.py) to access the domain controller. There are many actions an attacker can take at this point but access to the DC is enough to prove our compromise. 
 
-![smbexec1](https://swolfsec.github.io/assets/img/4_smbexec_latmvmt1.PNG){: .mx-auto.d-block :}  
+![smbexec1](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/4_smbexec_latmvmt1.PNG){: .mx-auto.d-block :}  
 
 In this scenario, our defenders perform a password reset on the account but **do not** disable the account. 
 
-![resetpw](https://swolfsec.github.io/assets/img/5_resetpw.PNG){: .mx-auto.d-block :}  
+![resetpw](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/5_resetpw.PNG){: .mx-auto.d-block :}  
 
 Although a password reset was performed, the attacker will still have their ticket imported and notice no changes to it and in fact, using the same method as before to move laterally without needing to provide the new credentials!
 
-![smbexecafterpwrst](https://swolfsec.github.io/assets/img/8_smbexec_latmvmt2_afterpwreset.PNG){: .mx-auto.d-block :}  
+![smbexecafterpwrst](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/8_smbexec_latmvmt2_afterpwreset.PNG){: .mx-auto.d-block :}  
 
 As you can imagine, this can result in an endless cat and mouse game where the credentials are reset, the Kerberos ticket is used to request the new credentials and so on. 
 
 The continued use of the Kerberos ticket would not be possible had the defenders also disabled the account. As long as the account is disabled the attacker will be unable to misuse the _highpriv_user_ account. 
 
-![accountdisable](https://swolfsec.github.io/assets/img/9_accountdisable.PNG){: .mx-auto.d-block :}  
+![accountdisable](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/9_accountdisable.PNG){: .mx-auto.d-block :}  
 
 With the account disabled, the attacker fails to authenticate even though their ticket is still valid.
 
-![smbexecfail](https://swolfsec.github.io/assets/img/10_failuretosmbexec_accountdisabled.PNG){: .mx-auto.d-block :}  
+![smbexecfail](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/10_failuretosmbexec_accountdisabled.PNG){: .mx-auto.d-block :}  
 
 Unfortunately in our scenario the defenders failed to disable the account. The original ticket will only last 10 hours (by default but can be different depending on your environment), at which point they would need to supply the new password to request a new ticket. 
 
 Although, if the attacker identified that the account had a password reset, they can simply renew the ticket prior to expiration and continue operating within the environment. Remember, by default the renewal of a ticket can occur for 7 days from the date of issue. At the renewal expiry of 7 days, a new ticket would need to be requested. The Event ID **4770** gives descriptive information regarding the user account whose ticket is being renewed, and where the renewal was requested from (in this case _192.168.5.164_ which is the attacker system but in a real scenario this may come from a patient zero system).
 
-![kinitR](https://swolfsec.github.io/assets/img/11_kinit-R.PNG){: .mx-auto.d-block :}  
+![kinitR](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/11_kinit-R.PNG){: .mx-auto.d-block :}  
 
-![ticketrenew4770](https://swolfsec.github.io/assets/img/13_TicketRenewal4770.PNG){: .mx-auto.d-block :}  
+![ticketrenew4770](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/13_TicketRenewal4770.PNG){: .mx-auto.d-block :}  
 
 The first screenshot above shows the same **renewal** expiry as the original Kerberos Ticket request, but has a new validity start/expiry period. If you look closely, the start/expiry times match the minutes / seconds on the 4770 event log. (klist time - 02:**01:55** -- Event Log time - 11:**01:55**). With the renewed ticket and the password reset, a final secretsdump against the Domain Controller shows the attacker's Kerberos Ticket is still valid.  
 
-![secrestdump](https://swolfsec.github.io/assets/img/12_secretsdumpafterrenewal.PNG){: .mx-auto.d-block :}  
+![secrestdump](https://swolfsec.github.io/assets/img/img_2023-09-28-Kerberos-PW/12_secretsdumpafterrenewal.PNG){: .mx-auto.d-block :}  
 
 Of course, during this process the attacker would need to recognize that the password was reset prior to the expiration of the ticket and disabling the account would have prevented further abuse and there are plenty of other ways to persist in a domain. A common remediation task for Golden Tickets and other kerberos-based attacks involves a [krbtgt double-tap](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/forest-recovery-guide/ad-forest-recovery-reset-the-krbtgt-password) where the krbtgt account has its password rotated twice with 10 hours between resets. This approach can also be viable for abuse of Kerberos Tickets explained here. The process of performing a double-tap can have significant impact on an organization who relies on Active Directory therefore, it may not be a bad idea to practice performing a krbtgt double-tap prior to an incident and determine exactly the impact it will have. 
 
