@@ -3,9 +3,9 @@ published: true
 layout: post
 title: Webshell Compilation Artifacts
 subtitle: Understanding Artifacts From the Compilation of Webshells
-tags: [webshells][java][c#][jsp][aspx]
+tags: [webshells]
 comments: false
-share-img:  https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/java.jpg
+share-img: https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/java.jpg
 ---
 > By Stephan Wolfert
 
