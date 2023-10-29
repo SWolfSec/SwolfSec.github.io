@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Not just Kerberoasting
+title: Not Just Kerberoasting
 subtitle: Kerberos Tickets and Password Resets
 tags: [kerberos]
 comments: false
