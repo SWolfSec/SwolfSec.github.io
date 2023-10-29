@@ -1,4 +1,5 @@
 ---
+published: true
 layout: post
 title: Not Just Kerberoasting
 subtitle: Kerberos Tickets and Password Resets
