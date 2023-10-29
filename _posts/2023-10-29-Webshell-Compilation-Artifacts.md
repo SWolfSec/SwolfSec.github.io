@@ -25,7 +25,7 @@ It is important to note that these compilation artifacts are a result of the web
 ## ASPX Webshells 
 First taking a look at our ASPX webshell which is hosted on a dotnet application running on a Windows Server.  The name of this basic webshell is `cmdasp.aspx`. 
 
-|![ASPXWebshell](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/ASPXWebshell.PNG){:mx-auto.d-block}|
+|![ASPXWebshell](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/ASPXWebshell.PNG)|
 |:--:|
 |Figure 1: ASPX Webshell used to run `whoami /all`|
 
@@ -33,13 +33,13 @@ We do not need to run any commands through the ASPX webshell in order for compil
 
 The location of compilation artifacts will vary based on the application but generally searching within the `C:\Windows\Microsoft.NET\Framework\[version]\Temporary ASP.NET Files\` directory will lead you in the right direction.  You will see in figure 2 the directory of our application as an example. 
 
-|![WebshellCompilationFiles](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/WebshellCompilationFiles.PNG){:mx-auto.d-block}|
+|![WebshellCompilationFiles](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/WebshellCompilationFiles.PNG)|
 |:--:|
 |Figure 2: Compilation artifacts for ASPX webshell|
 
 As mentioned previously, there will be many files within these directories that are legitimate files related to the running web application. In our example, the files of interest stand out based on their timestamp. Starting with the file `cmd.aspx.cdcab7d2.compiled`, since if you are unfamiliar with the topic of this blog it was likely the first file that caught your eye.
 
-|![ASPXmetadata](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/ASPXmetadata.PNG){:mx-auto.d-block}|
+|![ASPXmetadata](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/ASPXmetadata.PNG)|
 |:--:|
 |Figure 3: Compilation artifact for ASPX webshell ".compiled"|
 
@@ -47,13 +47,13 @@ Looking at this file in Figure 3, if we wanted to know how this webshell worked,
 
 Now that we know the DLL name of interest, `App_Web_z01dtudd` we can move to decompiling using a tool named [dnSpy](https://github.com/dnSpy/dnSpy).  Decompilation of dotnet code is fairly trivial, loading the DLL into dnSpy gives us pretty much all we will need. As shown in Figure 4, the functionality of the webshell is easily readable almost instantly. 
 
-|![dnSpy](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/dnSpy.PNG){:mx-auto.d-block}|
+|![dnSpy](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/dnSpy.PNG)|
 |:--:|
 |Figure 4: dnSpy to decompile ASPX webshell DLL artifact|
 
 This process can give us key information on the functionality of the webshell. Why is that important to us? Well, here we see `cmd.exe` as the primary execution method. This can help us identify the child processes to look for under the web worker process i.e. `w3wp.exe` spawning `cmd.exe`. In Figure 5, we used the webshell to execute `powershell.exe` which results in the following process tree. Although `cmd.exe` spawning from `w3wp.exe` should already be on your radar, if a webshell was performing a more novel method of execution we could use the knowledge from the decompiled code to create detections or hunting queries for it. 
 
-|![ASPXProcExp](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/ASPXProcExp.PNG){:mx-auto.d-block}|
+|![ASPXProcExp](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/ASPXProcExp.PNG)|
 |:--:|
 |Figure 5: Process telemetry of the webshell|
 
@@ -61,8 +61,8 @@ Other key important details that could provide context when looking at other art
 
 A quick note on showing the compilation process, there are other cmdline and out files (`z01dtudd.out`) associated with this DLL that show the actual compilation commands executed using `csc.exe` as shown in Figure 6. 
 
-|![OutFile1](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/OutFile1.PNG){:mx-auto.d-block}|
-|![OutFile2](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/OutFile2.PNG){:mx-auto.d-block}|
+|![OutFile1](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/OutFile1.PNG)|
+|![OutFile2](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/OutFile2.PNG)|
 |:--:|
 |Figure 6: Compilation "out" file showing the actual compilation commands using `csc.exe`|
 
@@ -76,13 +76,13 @@ Now on to JSP webshells, the same principles will apply since we are still looki
 
 The name of the the webshell here is `cmdjsp.jsp` . Identification of the artifacts related to the JSP webshell will be slightly easier since here the class file of compiled code will include the webshell name. In Figure 8, you can see we are looking for `__cmdjsp.class`. This class file is not typically going to be found in the same directory where the webshell exists (or existed) although the actual location will likely depend on the java application which was running on the server. 
 
-|![CompiledClass](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/CompiledClass.PNG){:mx-auto.d-block}|
+|![CompiledClass](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/CompiledClass.PNG)|
 |:--:|
 |Figure 8: JSP Class file identified on disk|
 
 Similarly to before, now that we have our compiled class file we can use a tool known as [JD-GUI](http://java-decompiler.github.io/)  to decompile it. Loading the class file into JD-GUI gives us a clear view into the actual code behind the webshell as shown in Figure 9.
 
-|![JD-GUI](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/JD-GUI.PNG){:mx-auto.d-block}|
+|![JD-GUI](https://swolfsec.github.io/assets/img/img_2023-10-29-Webshells/JD-GUI.PNG)|
 |:--:|
 |Figure 9: Decompiled Java class file from JSP webshell|
 
