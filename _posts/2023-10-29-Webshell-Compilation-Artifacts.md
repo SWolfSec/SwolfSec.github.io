@@ -58,7 +58,7 @@ This process can give us key information on the functionality of the webshell. W
 |:--:|
 |Figure 5: Process telemetry of the webshell|
 
-Other key important details that could provide context when looking at other artifacts include; Do we need to identify POST or GET requests in the http access logs? Did we identify the ability to proxy commands to the internal network like [reGorg](https://github.com/sensepost/reGeorg)? Are there accounts or hard-coded credentials referenced in the webshell? Is the webshell unique and is there attribution to a specific threat actor associated with it?  These are just a few quick examples of why knowing the functionality is important. 
+Other key important details that could provide context when looking at other artifacts include; Do we need to identify POST or GET requests in the http access logs? Did we identify the ability to proxy commands to the internal network like [reGeorg](https://github.com/sensepost/reGeorg)? Are there accounts or hard-coded credentials referenced in the webshell? Is the webshell unique and is there attribution to a specific threat actor associated with it?  These are just a few quick examples of why knowing the functionality is important. 
 
 A quick note on showing the compilation process, there are other cmdline and out files (`z01dtudd.out`) associated with this DLL that show the actual compilation commands executed using `csc.exe` as shown in Figure 6. 
 
