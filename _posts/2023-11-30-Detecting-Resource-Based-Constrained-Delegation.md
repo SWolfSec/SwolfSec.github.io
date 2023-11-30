@@ -1,7 +1,7 @@
 ---
 published: true
 layout: post
-title: Investigating and Detecting Resource-Based Constrained Delegation Attacks
+title: Detecting Resource-Based Constrained Delegation Abuse
 subtitle: Detecting RBCD abuse in a sea of Active Directory logs
 tags: [kerberos] [RBCD] [ACL]
 comments: false
@@ -126,12 +126,12 @@ index=win EventCode=5136 LDAPDisplayName=msDS-AllowedToActOnBehalfOfOtherIdentit
 
 ## References
 
-https://eladshamir.com/2019/01/28/Wagging-the-Dog.html
-https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/resource-based-constrained-delegation-ad-computer-object-take-over-and-privilged-code-execution
-https://training.zeropointsecurity.co.uk/courses/red-team-ops
-https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/resource-based-constrained-delegation
-https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4741
-https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4769
-https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-constrained-delegation-overview
-https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/3bff5864-8135-400e-bdd9-33b552051d94
-https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/bde93b0e-f3c9-4ddf-9f44-e1453be7af5a
+- https://eladshamir.com/2019/01/28/Wagging-the-Dog.html
+- https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/resource-based-constrained-delegation-ad-computer-object-take-over-and-privilged-code-execution
+- https://training.zeropointsecurity.co.uk/courses/red-team-ops
+- https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/resource-based-constrained-delegation
+- https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4741
+- https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4769
+- https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-constrained-delegation-overview
+- https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/3bff5864-8135-400e-bdd9-33b552051d94
+- https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/bde93b0e-f3c9-4ddf-9f44-e1453be7af5a
