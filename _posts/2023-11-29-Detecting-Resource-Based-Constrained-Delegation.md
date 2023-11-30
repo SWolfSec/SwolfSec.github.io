@@ -131,7 +131,7 @@ index=win EventCode=5136 LDAPDisplayName=msDS-AllowedToActOnBehalfOfOtherIdentit
 - https://eladshamir.com/2019/01/28/Wagging-the-Dog.html
 </font>
 <font size="1"><br>
-https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuseresource-based-constrained-delegation-ad-computer-object-take-over-and-privilged-code-execution
+- https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuseresource-based-constrained-delegation-ad-computer-object-take-over-and-privilged-code-execution
 </font>
 <font size="1"><br>
 - https://training.zeropointsecurity.co.uk/courses/red-team-ops
