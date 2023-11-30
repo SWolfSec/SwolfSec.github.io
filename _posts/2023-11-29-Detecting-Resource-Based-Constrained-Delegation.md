@@ -92,9 +92,9 @@ In the event that a Domain Computer object was created to facilitate RBCD rather
 ## Example Searches
   
 
-#### Kerberos Service Ticket Request - S4U2Proxy
+### Kerberos Service Ticket Request - S4U2Proxy
 
-##### KQL
+#### KQL
 
 ```
 event.code : 4769 and winlog.event_data.TicketOptions : 0x40820010 and NOT winlog.event_data.TransmittedServices : -
@@ -102,13 +102,15 @@ event.code : 4769 and winlog.event_data.TicketOptions : 0x40820010 and NOT winlo
 
 ![RBCD_10](https://swolfsec.github.io/assets/img/img_2023-RBCD/RBCD_10.PNG){: .mx-auto.d-block :}
 
-##### Splunk
+#### Splunk
 
 ```
 index=win EventCode=4769 TicketOptions=0x40820010 NOT TransitedServices="-"
 ```
 
-#### msDS-AllowedToActOnBehalfOfOtherIdentity Modification
+### msDS-AllowedToActOnBehalfOfOtherIdentity Modification
+
+#### KQL
 
 ```
 
@@ -117,7 +119,7 @@ event.code : "5136" and winlog.event_data.AttributeLDAPDisplayName : "msDS-Allow
 ```
 ![RBCD_11](https://swolfsec.github.io/assets/img/img_2023-RBCD/RBCD_11.PNG){: .mx-auto.d-block :}
 
-##### Splunk
+### Splunk
 
 ```
 index=win EventCode=5136 LDAPDisplayName=msDS-AllowedToActOnBehalfOfOtherIdentity
