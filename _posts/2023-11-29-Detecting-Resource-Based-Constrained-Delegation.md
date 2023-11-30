@@ -5,7 +5,7 @@ title: Detecting Resource-Based Constrained Delegation Abuse
 subtitle: Detecting RBCD abuse in a sea of Active Directory logs
 tags: [kerberos]
 comments: false
-share-img:  https://swolfsec.github.io/assets/img/img_2023-RBCD/RBCD_DetectionLogic.PNG
+share-img:  https://swolfsec.github.io/assets/img/img_2023-RBCD/RBCD_DetectionLogic.png
 ---
 > By Stephan Wolfert
 
