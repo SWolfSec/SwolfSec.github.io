@@ -59,7 +59,7 @@ We have our three (3) Windows Event Logs to identify RBCD. Let's theorize about 
 
 All three (3) of these events play an important part in identifying RBCD abuse although some may be higher fidelity then others. With this in mind we can consider them independently and then how they relate to each other. This detection logic may look daunting at first but breaking it down in this way step by step can help us get to better detections with varying levels of confidence on the way. This is absolutely important to managing the quality of our detections and balancing between alert fatigue or a lack of alerting. 
 
-![RBCD_DetectionLogic](https://swolfsec.github.io/assets/img/img_2023-RBCD/RBCD_DetectionLogic.PNG){: .mx-auto.d-block :}
+![RBCD_DetectionLogic](https://swolfsec.github.io/assets/img/img_2023-RBCD/RBCD_DetectionLogic.png){: .mx-auto.d-block :}
 
 Please note, this detection logic here may vary based on your environment but the theory will stay the same. Additionally, there may be a point in this flow where you still want to push a detection or alert for instance if 5136 for the attribute `msDS-AllowedToActOnBehalfOfOtherIdentity` is extremely rare in your environment, or flat out non-existent, you may not care to check if the Account name is an uncommon or low-privileged user. Alternatively if this is a rather normal occurrence, you may wish to include an exclusion for that specific account performing that operation (as always be careful with exclusions). It probably goes without saying but every environment is different and I strongly encourage baselining before implementing detections.  
 
@@ -125,7 +125,7 @@ index=win EventCode=5136 LDAPDisplayName=msDS-AllowedToActOnBehalfOfOtherIdentit
 
 
 ## References
-
+<font size="1">
 - https://eladshamir.com/2019/01/28/Wagging-the-Dog.html
 - https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/resource-based-constrained-delegation-ad-computer-object-take-over-and-privilged-code-execution
 - https://training.zeropointsecurity.co.uk/courses/red-team-ops
@@ -135,3 +135,4 @@ index=win EventCode=5136 LDAPDisplayName=msDS-AllowedToActOnBehalfOfOtherIdentit
 - https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-constrained-delegation-overview
 - https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/3bff5864-8135-400e-bdd9-33b552051d94
 - https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/bde93b0e-f3c9-4ddf-9f44-e1453be7af5a
+</font>
