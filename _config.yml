@@ -22,7 +22,8 @@ author: Stephan Wolfert
 navbar-links:
   Home: "https://swolfsec.github.io"
   Resources:
-    - CrowdStrike: "https://www.crowdstrike.com/blog/author/stephan-wolfert/"
+    - CrowdStrike Blogs: "https://www.crowdstrike.com/blog/author/stephan-wolfert/"
+    - CrowdStrike White-Papers: "https://www.crowdstrike.com/resources/white-papers/investigating-active-directory-certificate-services-abuse-esc1/"
   About Me: "aboutme"
 
 ################
